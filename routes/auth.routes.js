@@ -8,6 +8,37 @@ const router = Router();
 
 // /api/auth/register
 
+async function hashPassword (password) {
+
+    const hashedPassword = await new Promise((resolve, reject) => {
+      bcrypt.hash(password, bcrypt.genSaltSync(10), function(err, hash) {
+        if (err) reject(err)
+        resolve(hash)
+      });
+    })
+  
+    return hashedPassword
+}
+
+
+// check email
+router.post(
+    '/check',
+    async (req, res) => {
+    try {
+        const {email} = req.body;
+        const candidate = await User.findOne({ email });
+        if (candidate) {
+            return res.status(201).json({error: 'Такая почта уже занята.'});
+        }
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({message: 'Server error'});
+    }
+})
+
+
+
 router.post(
     '/register',
     [
@@ -17,7 +48,7 @@ router.post(
     async (req, res) => {
     try {
         const errors = validationResult(req);
-
+     
         if (!errors.isEmpty()) {
             return res.status(400).json({
                 errors: errors.array(),
@@ -30,13 +61,13 @@ router.post(
         if (candidate) {
             return res.status(400).json({message: 'Такая почта уже занята.'});
         }
-        const hashedPassword = await bcrypt.hash(password, 89);
+        const hashedPassword = await hashPassword(password);
         const user = new User({email, password: hashedPassword});
-
         await user.save()
-
+        
         res.status(201).json({ message: 'User created' });
     } catch (e) {
+        console.log(e)
         res.status(500).json({message: 'Server error'});
     }
 })
@@ -49,6 +80,7 @@ router.post(
         check('password','Некорректный пароль').exists()
     ],
     async (req, res) => {
+    console.log('body', req.body)
     try {
         const errors = validationResult(req);
 

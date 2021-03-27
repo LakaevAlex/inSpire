@@ -1,5 +1,5 @@
 {
     "port": 5000,
     "jwtSecret": "alex inspire",
-    "mongoUri": "mongodb+srv://alex:199422aa@inspireclaster.pjuob.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    "mongoUri": "mongodb+srv://alex:1234qwer@cluster0.w4yxh.mongodb.net/app?retryWrites=true&w=majority"
 }
