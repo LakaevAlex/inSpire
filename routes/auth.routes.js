@@ -20,25 +20,6 @@ async function hashPassword (password) {
     return hashedPassword
 }
 
-
-// check email
-router.post(
-    '/check',
-    async (req, res) => {
-    try {
-        const {email} = req.body;
-        const candidate = await User.findOne({ email });
-        if (candidate) {
-            return res.status(201).json({error: 'Такая почта уже занята.'});
-        }
-    } catch (e) {
-        console.log(e)
-        res.status(500).json({message: 'Server error'});
-    }
-})
-
-
-
 router.post(
     '/register',
     [

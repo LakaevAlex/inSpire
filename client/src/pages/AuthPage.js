@@ -1,14 +1,14 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext} from 'react'
+import AuthContext from '../context/authContext'
 import useHttp from '../hooks/http.hook'
 import useMessage from '../hooks/message.hook'
-import useStorage from '../hooks/storage.hook'
 import debounce from '../utils/common'
 
 
 const AuthPage = () => {
+    const auth = useContext(AuthContext)
     const message = useMessage()
     const {loading, error, request, clearError} = useHttp()
-    const {saveToStorage, loadFromStorage, clearStorage} = useStorage();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -21,15 +21,6 @@ const AuthPage = () => {
 
     const handleEmailChange = async (e) => {
         setEmail(e.target.value);
-        // send request to check email is free before submit.
-        try {
-            const data = await request('/api/auth/check', 'POST', {email: e.target.value})
-            if (data.error) {
-                message(data.error);
-            }
-        } catch (e) {
-
-        }
     }
     
     const handlePasswordChange = (e) => {
@@ -38,8 +29,8 @@ const AuthPage = () => {
 
     const handleLoginClick = async () => {
         try {
-            const user = await request('/api/auth/login', 'POST', {email, password})
-            saveToStorage('user', user);
+            const data = await request('/api/auth/login', 'POST', {email, password})
+            auth.login(data.token, data.userId)
         } catch (e) {
 
         }
