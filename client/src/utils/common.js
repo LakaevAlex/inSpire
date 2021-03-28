@@ -13,4 +13,4 @@ function debounce(func, wait, immediate) {
 	};
 };
 
-export default {debounce}
+export default debounce;

@@ -2,13 +2,13 @@ import {useState, useEffect} from 'react'
 import useHttp from '../hooks/http.hook'
 import useMessage from '../hooks/message.hook'
 import useStorage from '../hooks/storage.hook'
-import {debounce} from '../utils/common'
+import debounce from '../utils/common'
 
 
 const AuthPage = () => {
     const message = useMessage()
     const {loading, error, request, clearError} = useHttp()
-    const {saveToStorage, getFromStorage, clearStorage} = useStorage;
+    const {saveToStorage, loadFromStorage, clearStorage} = useStorage();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -39,7 +39,7 @@ const AuthPage = () => {
     const handleLoginClick = async () => {
         try {
             const user = await request('/api/auth/login', 'POST', {email, password})
-            saveToStorage('user', data);
+            saveToStorage('user', user);
         } catch (e) {
 
         }

@@ -2,14 +2,14 @@ const useStorage = () => {
     const saveToStorage = (key, value) => {
         localStorage.setItem(key, value)
     }
-    const getFromStorage = (key) => {
+    const loadFromStorage = (key) => {
         localStorage.getItem(key)
     }
     const clearStorage = () => {
         localStorage.clear()
     }
 
-    return {saveToStorage, getFromStorage, clearStorage}
+    return {saveToStorage, loadFromStorage, clearStorage}
 }
 
 export default useStorage
