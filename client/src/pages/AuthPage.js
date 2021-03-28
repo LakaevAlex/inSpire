@@ -3,7 +3,7 @@ import AuthContext from '../context/authContext'
 import useHttp from '../hooks/http.hook'
 import useMessage from '../hooks/message.hook'
 import debounce from '../utils/common'
-
+import './authPage.scss'
 
 const AuthPage = () => {
     const auth = useContext(AuthContext)
@@ -47,8 +47,7 @@ const AuthPage = () => {
     
 
     return (
-        <div>
-            <div>AuthPage</div>
+        <div className="auth-page">
             <form>
                 <label htmlFor="email"></label>
                 <input
@@ -64,18 +63,20 @@ const AuthPage = () => {
                     type="password"
                     placeholder="pwd"
                 />
-                <button 
-                    onClick={handleLoginClick}
-                    disabled={loading}
-                >
-                    Login
-                </button>
-                <button 
-                    onClick={handleSignupClick}
-                    disabled={loading}
-                >
-                    Sign up
-                </button>
+                <div className='button-group'>
+                    <button 
+                        onClick={handleLoginClick}
+                        disabled={loading}
+                    >
+                        Login
+                    </button>
+                    <button 
+                        onClick={handleSignupClick}
+                        disabled={loading}
+                    >
+                        Sign up
+                    </button>
+                </div>
             </form>
         </div>
     )

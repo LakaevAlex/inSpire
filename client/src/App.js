@@ -11,8 +11,7 @@ function App() {
   return (
     <AuthContext.Provider value={{token, login, logout, userId, isAuthenticated}}>
       <Router>
-        <div className="container">
-          <h1> hello </h1>
+        <div className="container-fluid">
           {routes}
         </div>
       </Router>

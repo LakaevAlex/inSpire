@@ -31,9 +31,12 @@ router.post(
         const errors = validationResult(req);
      
         if (!errors.isEmpty()) {
+            let errorsText = errors.array().reduce((acc, current) => {
+                return acc + `${current.msg} </br>`
+            }, "")
             return res.status(400).json({
                 errors: errors.array(),
-                message: 'Некорректные данные при регистрации'
+                message: errorsText
             })
         }
 

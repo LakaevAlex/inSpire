@@ -12,7 +12,6 @@ router.post(
     auth,
     async (req, res) => {
     try {
-        console.log(req.user.userId)
         res.status(201).json({ message: 'test passed' });
     } catch (e) {
         console.log(e)
